@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>مختبر تغيرات المادة</title>
+<link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#f1f0f8;--card:#fff;--ink:#1d1b3a;--mut:#645f80;--pri:#b32a58;--pri2:#f6dde6;--ok:#13804f;--okbg:#d9f3e6;--bad:#c23030;--badbg:#fbe0e0;--ph:#2a68c8;--phbg:#dce8fa;--ch:#d96a24;--chbg:#fce6d5;--line:#d8d4ea}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15132b;--card:#211f3f;--ink:#efecff;--mut:#a9a4c9;--pri:#f0709a;--pri2:#43203a;--ok:#5fd699;--okbg:#17382b;--bad:#ff8585;--badbg:#42202a;--ph:#7fb0ff;--phbg:#1d3254;--ch:#ffa56b;--chbg:#473021;--line:#3a3762}}
+:root[data-theme="dark"]{--bg:#15132b;--card:#211f3f;--ink:#efecff;--mut:#a9a4c9;--pri:#f0709a;--pri2:#43203a;--ok:#5fd699;--okbg:#17382b;--bad:#ff8585;--badbg:#42202a;--ph:#7fb0ff;--phbg:#1d3254;--ch:#ffa56b;--chbg:#473021;--line:#3a3762}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Readex Pro",Tahoma,Arial,sans-serif;line-height:1.8;font-size:16px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--pri);z-index:10}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--pri);color:#fff;padding:10px 14px 0}
+.top{display:flex;justify-content:space-between;align-items:center;max-width:760px;margin:auto}
+h1{font-size:18px;margin:0}
+.pts{background:rgba(255,255,255,.2);border-radius:20px;padding:0 12px;font-weight:700}
+.bar{height:5px;background:rgba(255,255,255,.3);margin:8px -14px 0}
+.bar i{display:block;height:100%;width:0;background:#fff;transition:width .5s}
+nav{display:flex;gap:4px;overflow-x:auto;max-width:760px;margin:auto;padding:6px 0}
+nav button{flex:none;border:0;background:transparent;color:#fff;opacity:.75;font:inherit;font-size:14px;padding:4px 12px;border-radius:16px;cursor:pointer}
+nav button.on{background:#fff;color:var(--pri);opacity:1;font-weight:700}
+main{max-width:760px;margin:auto;padding:16px 14px 60px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:14px}
+h2{font-size:21px;margin:4px 0 8px}h3{margin:0 0 4px;font-size:17px}
+p{margin:6px 0}.hint{color:var(--mut);font-size:14px}
+button.btn{font:inherit;font-weight:700;border:0;background:var(--pri);color:#fff;padding:10px 20px;border-radius:12px;cursor:pointer}
+button.btn:disabled{opacity:.4;cursor:default}
+button.alt{background:var(--pri2);color:var(--pri)}
+button:focus-visible,.chip:focus-visible,.bucket:focus-visible{outline:3px solid var(--ph);outline-offset:2px}
+.row{display:flex;gap:10px;flex-wrap:wrap}.row>*{flex:1 1 140px}
+.opt{display:block;width:100%;text-align:right;font:inherit;color:var(--ink);background:var(--card);border:2px solid var(--line);border-radius:12px;padding:10px 14px;margin:6px 0;cursor:pointer}
+.opt.ok{border-color:var(--ok);background:var(--okbg)}.opt.no{border-color:var(--bad);background:var(--badbg)}
+.fb{min-height:28px;font-weight:600;margin-top:8px}.fb.ok{color:var(--ok)}.fb.no{color:var(--bad)}
+.pool{display:flex;flex-wrap:wrap;gap:8px;min-height:48px;margin:10px 0}
+.chip{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:6px 12px;cursor:grab;user-select:none;-webkit-user-select:none;touch-action:none}
+.hot{outline:3px solid var(--pri);outline-offset:2px;background-color:var(--pri2)}
+.buckets{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.bucket{border:2px dashed;border-radius:14px;padding:10px;min-height:150px;cursor:pointer}
+.bucket.p{border-color:var(--ph);background:var(--phbg)}.bucket.c{border-color:var(--ch);background:var(--chbg)}
+.bucket b{display:block}.bucket small{display:block;color:var(--mut);font-size:12px;line-height:1.4;margin-bottom:6px}
+.bucket .chip{display:block;margin:4px 0;font-size:13px;cursor:default;border-style:solid}
+.shake{animation:sh .35s}@keyframes sh{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.eq{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;margin:12px 0}
+.slot{min-width:92px;min-height:46px;border:2px dashed var(--line);border-radius:12px;display:flex;align-items:center;justify-content:center;padding:4px 10px;cursor:pointer;text-align:center;font-size:14px}
+.slot.r.f{border:2px solid var(--ph);background:var(--phbg)}.slot.p.f{border:2px solid var(--ok);background:var(--okbg)}
+.slot.r{border-color:var(--ph)}.slot.p{border-color:var(--ok)}
+.sym{font-size:24px;font-weight:700;color:var(--mut)}
+.tags{display:flex;justify-content:space-around;font-size:13px;font-weight:700}
+.tags .a{color:var(--ph)}.tags .b{color:var(--ok)}
+svg{width:100%;height:auto;background:var(--bg);border-radius:12px}
+svg circle{transition:transform 1.6s ease-in-out}
+.cap{text-align:center;font-weight:700;min-height:30px}
+.can{display:flex;gap:10px;align-items:flex-start;padding:10px;border:2px solid var(--line);border-radius:12px;margin:8px 0;cursor:pointer}
+.can .bx{flex:none;width:28px;height:28px;border-radius:8px;border:2px solid var(--line);display:grid;place-items:center;font-weight:700;color:#fff}
+.can.on{border-color:var(--ok);background:var(--okbg)}.can.on .bx{background:var(--ok);border-color:var(--ok)}
+.big{font-size:42px;text-align:center}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.two>div{border-radius:12px;padding:10px;font-size:14px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header>
+<div class="top"><h1>🧪 مختبر تغيرات المادة</h1><div class="pts" id="pts">⭐ 0</div></div>
+<div class="bar"><i id="pb"></i></div>
+<nav id="nav"></nav>
+</header>
+<main id="v"></main>
+<script>
+var T=["تمهيد","افهم وصنّف","شاهد التفاعل","المعادلة اللفظية","التحدي","أستطيع أن"];
+var S={pts:0,d:{sort:0,sim:0,eq1:0,eq2:0,quiz:0},pred:null,tab:0};
+var v=document.getElementById("v"),sel=null;
+function $(s,e){return (e||document).querySelector(s)}
+function add(n){S.pts+=n;$("#pts").textContent="⭐ "+S.pts}
+function prog(){var d=S.d,n=d.sort+d.sim+d.eq1+d.eq2+d.quiz;$("#pb").style.width=(n/5*100)+"%"}
+function go(i){S.tab=i;sel=null;$("#nav").innerHTML=T.map(function(t,k){return '<button class="'+(k==i?"on":"")+'" onclick="go('+k+')">'+t+'</button>'}).join("");[tIntro,tSort,tSim,tEq,tQuiz,tCan][i]();prog();window.scrollTo(0,0)}
+function next(i){return '<button class="btn" style="margin-top:8px" onclick="go('+i+')">التالي: '+T[i]+'</button>'}
+function shake(e){e.classList.remove("shake");void e.offsetWidth;e.classList.add("shake")}
+function drag(c){c.addEventListener("pointerdown",function(e){e.preventDefault();var g=c.cloneNode(true);g.style.cssText="position:fixed;pointer-events:none;z-index:99;margin:0;opacity:.92;box-shadow:0 8px 22px rgba(0,0,0,.35);transform:scale(1.1);width:"+c.offsetWidth+"px";document.body.appendChild(g);c.style.opacity=.3;var last=null;
+function at(ev){g.style.left=(ev.clientX-g.offsetWidth/2)+"px";g.style.top=(ev.clientY-g.offsetHeight/2)+"px";var t=document.elementFromPoint(ev.clientX,ev.clientY);t=t&&t.closest(".bucket,.slot");if(last&&last!==t)last.classList.remove("hot");if(t&&!t.classList.contains("f"))t.classList.add("hot");last=t;return t}
+function mv(ev){at(ev)}
+function up(ev){document.removeEventListener("pointermove",mv);document.removeEventListener("pointerup",up);document.removeEventListener("pointercancel",up);var t=at(ev);g.remove();c.style.opacity=1;if(last)last.classList.remove("hot");if(t&&t._drop){sel=c;t._drop()}sel=null}
+document.addEventListener("pointermove",mv);document.addEventListener("pointerup",up);document.addEventListener("pointercancel",up);at(e)})}
+function drop(t,f){t._drop=f}
+
+/* 0 تمهيد */
+function tIntro(){
+v.innerHTML='<div class="card"><div class="big">🔥⚗️</div><h2>تمهيد: ماذا يحدث داخل المختبر؟</h2><p>الماء يتجمد ويتبخر، لكنه يبقى ماءً. أما عند تسخين برادة الحديد مع مسحوق الكبريت فيظهر شيء مختلف تمامًا.</p><h3>🔮 توقّع:</h3><p>ماذا سيحدث عند تسخين الحديد مع الكبريت؟</p><div id="o"></div><div class="fb" id="fb"></div></div>'+
+'<div class="card"><h3>🎯 عبارات أستطيع أن</h3><p>✔ أستطيع أن أشرح الاختلاف بين التغيرات الفيزيائية والتغيرات الكيميائية.</p><p>✔ أستطيع أن أحدد المواد المتفاعلة والمواد الناتجة في معادلة لفظية لتفاعل كيميائي.</p><p>✔ أستطيع أن أستخدم معادلة لفظية لوصف تفاعل كيميائي.</p></div>'+next(1);
+var o=["يبقى الحديد والكبريت مخلوطين كما هما","تتكوّن مادة جديدة لها خواص مختلفة","يتحول الكبريت إلى ماء"];
+$("#o").innerHTML=o.map(function(t,i){return '<button class="opt" data-i="'+i+'">'+t+'</button>'}).join("");
+document.querySelectorAll("#o .opt").forEach(function(b){b.onclick=function(){S.pred=+b.dataset.i;document.querySelectorAll("#o .opt").forEach(function(x){x.classList.remove("ok")});b.classList.add("ok");$("#fb").textContent="سجّلنا توقعك! سنتحقق منه في خطوة «شاهد التفاعل».";}})}
+
+/* 1 افهم وصنّف */
+var items=[["ذوبان الثلج","p","الماء ما زال ماءً، تغيرت الحالة فقط."],["غليان الماء","p","الماء صار بخارًا لكنه نفس المادة."],["كسر كأس زجاجي","p","تغير الشكل فقط، والمادة ما زالت زجاجًا."],["تجمد الماء","p","انتقل الماء من سائل إلى صلب."],["تسخين الحديد مع الكبريت","c","تكوّنت مادة جديدة هي كبريتيد الحديد."],["تحلل الماء إلى هيدروجين وأكسجين","c","تكوّنت مادتان جديدتان."],["هضم الطعام في الجهاز الهضمي","c","البروتين تفكك إلى أحماض أمينية."],["التمثيل الضوئي في أوراق النبات","c","تكوّنت مواد جديدة."]];
+function tSort(){
+S.s=0;
+v.innerHTML='<div class="card"><h2>افهم الفرق</h2><div class="two"><div style="background:var(--phbg)"><b>🧊 التغير الفيزيائي</b><br>لا تتكوّن مواد جديدة. قد تتغير الحالة أو الشكل، وتبقى المادة نفسها.</div><div style="background:var(--chbg)"><b>🔥 التغير الكيميائي</b><br>تتكوّن مواد جديدة. ويسمى ما يحدث تفاعلًا كيميائيًا.</div></div><p style="text-align:center;font-weight:700;margin-top:10px">السؤال الذهبي: هل تكوّنت مادة جديدة؟</p></div>'+
+'<div class="card"><h2>🎮 لعبة التصنيف</h2><p class="hint">اسحب البطاقة وأفلتها داخل السلة المناسبة.</p><div class="pool" id="pool"></div><div class="buckets"><div class="bucket p" data-t="p" tabindex="0"><b>🧊 تغير فيزيائي</b><small>لا تتكوّن مادة جديدة</small></div><div class="bucket c" data-t="c" tabindex="0"><b>🔥 تغير كيميائي</b><small>تتكوّن مادة جديدة</small></div></div><div class="fb" id="fb"></div></div><div id="nx"></div>';
+items.forEach(function(it){var c=document.createElement("div");c.className="chip";c.textContent=it[0];c.tabIndex=0;c.dataset.t=it[1];c.dataset.m=it[2];drag(c);$("#pool").appendChild(c)});
+document.querySelectorAll(".bucket").forEach(function(b){drop(b,function(){
+var c=sel;if(!c)return;c.classList.remove("sel");sel=null;var fb=$("#fb");
+if(c.dataset.t==b.dataset.t){c.draggable=false;c.style.pointerEvents="none";b.appendChild(c);fb.className="fb ok";fb.textContent="✅ أحسنت! "+c.dataset.m;add(10);S.s++;
+ if(S.s==items.length){S.d.sort=1;prog();fb.textContent="🏆 أتممت التصنيف بنجاح!";$("#nx").innerHTML=next(2)}}
+else{fb.className="fb no";fb.textContent="❌ فكّر: هل تكوّنت مادة جديدة؟";shake(b)}})})}
+
+/* 2 شاهد التفاعل */
+var SC=[{n:"الحديد + الكبريت",b:"الحديد + الكبريت",a:"كبريتيد الحديد",t:"تفاعلت ذرات الحديد مع ذرات الكبريت فتكوّنت مادة جديدة هي كبريتيد الحديد.",
+at:[[60,60,150,60,16,"#e8793a"],[60,140,150,140,16,"#e8793a"],[300,60,184,60,18,"#f2c94c"],[300,140,184,140,18,"#f2c94c"]]},
+{n:"تحلل الماء",b:"الماء",a:"أكسجين + هيدروجين",t:"تفككت جزيئات الماء إلى مادتين جديدتين: الأكسجين والهيدروجين.",
+at:[[80,65,170,100,18,"#d94f4f"],[52,88,270,60,11,"#fff"],[108,88,300,60,11,"#fff"],[80,150,206,100,18,"#d94f4f"],[52,173,270,140,11,"#fff"],[108,173,300,140,11,"#fff"]]}];
+var cur=0,guess=null;
+function tSim(){
+v.innerHTML='<div class="card"><h2>🔬 شاهد التفاعل</h2><div class="row" id="sc"></div><svg viewBox="0 0 360 200" id="sv" role="img" aria-label="محاكاة التفاعل"></svg><div class="cap" id="cap"></div><p><b>🔮 توقّع أولًا:</b> هل ستتكوّن مادة جديدة؟</p><div class="row"><button class="btn alt" id="y">نعم</button><button class="btn alt" id="n">لا</button></div><div class="row" style="margin-top:10px"><button class="btn" id="run" disabled>⚡ ابدأ التفاعل</button><button class="btn alt" id="rs">↺ إعادة</button></div><div class="fb" id="fb"></div></div><div id="nx"></div>';
+$("#sc").innerHTML=SC.map(function(s,i){return '<button class="btn '+(i==cur?"":"alt")+'" data-i="'+i+'">'+s.n+'</button>'}).join("");
+document.querySelectorAll("#sc button").forEach(function(b){b.onclick=function(){cur=+b.dataset.i;tSim()}});
+var s=SC[cur];guess=null;
+var h="";s.at.forEach(function(a,i){h+='<circle r="'+a[4]+'" fill="'+a[5]+'" stroke="#7a6a8a" stroke-width="2" cx="0" cy="0" style="transform:translate('+a[0]+'px,'+a[1]+'px)"/>'});
+$("#sv").innerHTML=h;$("#cap").textContent="قبل التفاعل: "+s.b;
+function setG(g){guess=g;$("#run").disabled=false;$("#y").className="btn "+(g?"":"alt");$("#n").className="btn "+(g?"alt":"")}
+$("#y").onclick=function(){setG(true)};$("#n").onclick=function(){setG(false)};
+$("#run").onclick=function(){document.querySelectorAll("#sv circle").forEach(function(c,i){var a=s.at[i];c.style.transform="translate("+a[2]+"px,"+a[3]+"px)"});
+$("#cap").textContent="بعد التفاعل: "+s.a;var fb=$("#fb");
+fb.className="fb "+(guess?"ok":"no");fb.textContent=(guess?"✅ توقعك صحيح! ":"❌ الحقيقة: تكوّنت مادة جديدة. ")+s.t;
+if(!S.d.sim){S.d.sim=1;add(15);prog()}$("#nx").innerHTML=next(3)};
+$("#rs").onclick=tSim}
+
+/* 3 المعادلة اللفظية */
+var E=[{r:["الحديد","الكبريت"],p:["كبريتيد الحديد"],pool:["كبريتيد الحديد","الكبريت","أكسجين","الحديد"]},{r:["الماء"],p:["هيدروجين","أكسجين"],pool:["أكسجين","الماء","كبريتيد الحديد","هيدروجين"]}];
+var ei=0;
+function tEq(){
+var e=E[ei],filled=0,tot=e.r.length+e.p.length;
+v.innerHTML='<div class="card"><h2>🧩 ابنِ المعادلة اللفظية</h2><p>قبل أن نلعب، تعلّم القاعدة:</p><div class="two" style="margin:8px 0"><div style="background:var(--phbg)"><b>قبل السهم: مواد متفاعلة</b><br>هي المواد الموجودة في بداية التفاعل.</div><div style="background:var(--okbg)"><b>بعد السهم: مواد ناتجة</b><br>هي المواد الجديدة التي تتكوّن.</div></div><div class="eq"><span class="chip" style="cursor:default;border-color:var(--ph);background:var(--phbg)">مادة متفاعلة + مادة متفاعلة</span><span class="sym">←</span><span class="chip" style="cursor:default;border-color:var(--ok);background:var(--okbg)">مادة ناتجة</span></div><p>السهم يعني «تتفاعل لتكوّن». نستخدم المعادلة اللفظية لوصف التغير الكيميائي فقط، لأن التغير الفيزيائي لا تتكوّن فيه مواد جديدة.</p><div class="row"><button class="btn '+(ei?"alt":"")+'" onclick="ei=0;tEq()">تفاعل ١: الحديد والكبريت</button><button class="btn '+(ei?"":"alt")+'" onclick="ei=1;tEq()">تفاعل ٢: تحلل الماء</button></div></div>'+
+'<div class="card"><p class="hint">اسحب المادة وأفلتها داخل الخانة المناسبة. الخانات الزرقاء للمتفاعلات والخضراء للنواتج.</p><div class="pool" id="pool"></div><div class="eq" id="eq"></div><div class="tags"><span class="a">المواد المتفاعلة</span><span class="b">المواد الناتجة</span></div><div class="fb" id="fb"></div><div id="sum"></div></div><div id="nx"></div>';
+var h="";e.r.forEach(function(x,i){h+=(i?'<span class="sym">+</span>':"")+'<div class="slot r" tabindex="0" data-g="r"></div>'});h+='<span class="sym">←</span>';
+e.p.forEach(function(x,i){h+=(i?'<span class="sym">+</span>':"")+'<div class="slot p" tabindex="0" data-g="p"></div>'});$("#eq").innerHTML=h;
+e.pool.forEach(function(n){var c=document.createElement("div");c.className="chip";c.textContent=n;c.tabIndex=0;drag(c);$("#pool").appendChild(c)});
+document.querySelectorAll(".slot").forEach(function(sl){drop(sl,function(){var c=sel;if(!c)return;c.classList.remove("sel");sel=null;var g=sl.dataset.g,fb=$("#fb");
+if(sl.classList.contains("f"))return;
+var used=[].map.call(document.querySelectorAll(".slot.f[data-g="+g+"]"),function(x){return x.textContent});
+if(e[g].indexOf(c.textContent)>-1&&used.indexOf(c.textContent)<0){sl.textContent=c.textContent;sl.classList.add("f");c.style.visibility="hidden";c.draggable=false;fb.className="fb ok";fb.textContent="✅ صحيح!";add(5);filled++;
+ if(filled==tot){var done=ei?"eq2":"eq1";var nm=function(a){return a.join(" + ")};
+ $("#sum").innerHTML='<div class="card" style="background:var(--okbg)"><b>📝 المعادلة اللفظية:</b><br>'+nm(e.r)+' ← '+nm(e.p)+'<p>في هذا التفاعل، '+(e.r.length>1?"تتفاعل المادتان ":"تتفكك المادة ")+'<b>'+nm(e.r)+'</b> لتكوّن <b>'+nm(e.p)+'</b>.</p></div>';
+ if(!S.d[done]){S.d[done]=1;add(10);prog()}$("#nx").innerHTML=(ei?next(4):'<button class="btn" onclick="ei=1;tEq()">جرّب التفاعل التالي</button>')}}
+else{fb.className="fb no";fb.textContent=(g=="r"?"❌ هذه الخانة للمواد المتفاعلة: ما الموجود في بداية التفاعل؟":"❌ هذه الخانة للمواد الناتجة: ما الذي تكوّن في النهاية؟");shake(sl)}})})}
+
+/* 4 التحدي */
+var Q=[["عند غليان الماء وتحوله إلى بخار، يكون التغير:",["فيزيائيًا لأن الماء بقي ماءً","كيميائيًا لأن الماء اختفى","كيميائيًا لأن الحالة تغيرت"],0],
+["في التفاعل الكيميائي:",["تتكوّن مواد جديدة","تبقى المواد كما هي","يتغير الشكل فقط"],0],
+["سقط كأس زجاجي وانكسر. هل حدث تفاعل كيميائي؟",["نعم، لأن الشكل تغيّر","لا، لم تتكوّن مادة جديدة","نعم، لأن الكأس انكسر"],1],
+["في المعادلة: الماء ← هيدروجين + أكسجين، المادة المتفاعلة هي:",["الهيدروجين","الأكسجين","الماء"],2],
+["المواد الموجودة في بداية التفاعل تسمى:",["مواد ناتجة","مواد متفاعلة","مواد جديدة فقط"],1],
+["التمثيل الضوئي: ثاني أكسيد الكربون + الماء ← الجلوكوز + الأكسجين. ما المواد الناتجة؟",["ثاني أكسيد الكربون والماء","الماء والأكسجين","الجلوكوز والأكسجين"],2]];
+function tQuiz(){var i=0,sc=0;
+function show(){
+if(i>=Q.length){S.d.quiz=1;prog();var st=sc>=5?"🌟🌟🌟":sc>=3?"🌟🌟":"🌟";v.innerHTML='<div class="card"><div class="big">'+st+'</div><h2 style="text-align:center">نتيجتك: '+sc+' من '+Q.length+'</h2><p style="text-align:center">'+(sc>=5?"أداء رائع! أنت كيميائي ماهر.":"جيد! راجع الخطوات السابقة وأعد المحاولة.")+'</p><div style="text-align:center"><button class="btn alt" onclick="tQuiz()">أعد التحدي</button> <button class="btn" onclick="go(5)">أستطيع أن</button></div></div>';return}
+var q=Q[i];v.innerHTML='<div class="card"><p class="hint">سؤال '+(i+1)+' من '+Q.length+'</p><h2>'+q[0]+'</h2><div id="o"></div><div class="fb" id="fb"></div><div id="nx"></div></div>';
+q[1].forEach(function(t,k){var b=document.createElement("button");b.className="opt";b.textContent=t;b.onclick=function(){
+if($("#nx").innerHTML)return;var ok=k==q[2];b.classList.add(ok?"ok":"no");if(!ok)$("#o").children[q[2]].classList.add("ok");
+$("#fb").className="fb "+(ok?"ok":"no");$("#fb").textContent=ok?"✅ إجابة صحيحة!":"❌ الإجابة الصحيحة موضّحة بالأخضر.";if(ok){sc++;add(10)}
+$("#nx").innerHTML='<button class="btn" id="nb">'+(i<Q.length-1?"السؤال التالي":"عرض النتيجة")+'</button>';$("#nb").onclick=function(){i++;show()}};$("#o").appendChild(b)})}
+show()}
+
+/* 5 أستطيع أن */
+function tCan(){
+var L=[["أستطيع أن أشرح الاختلاف بين التغيرات الفيزيائية والتغيرات الكيميائية.",S.d.sort],["أستطيع أن أحدد المواد المتفاعلة والمواد الناتجة في معادلة لفظية لتفاعل كيميائي.",S.d.eq1],["أستطيع أن أستخدم معادلة لفظية لوصف تفاعل كيميائي.",S.d.eq2]];
+v.innerHTML='<div class="card"><h2>✅ أستطيع أن…</h2><p class="hint">تتفعّل العبارة تلقائيًا عند إنجاز نشاطها، ويمكنك أيضًا الضغط عليها لتقييم نفسك.</p><div id="l"></div></div>'+
+'<div class="card" style="background:var(--pri2)"><h3>📌 ملخص الدرس</h3><p>• في التفاعل الكيميائي تتكوّن مواد جديدة.</p><p>• نوضّح ما يحدث بمعادلة لفظية.</p><p>• المواد في البداية تسمى متفاعلة، والمواد التي تتكوّن تسمى ناتجة.</p></div><div class="card" style="text-align:center"><b>مجموع نجومك: ⭐ '+S.pts+'</b></div>';
+L.forEach(function(x){var d=document.createElement("div");d.className="can"+(x[1]?" on":"");d.innerHTML='<span class="bx">'+(x[1]?"✓":"")+'</span><span>'+x[0]+'</span>';d.onclick=function(){d.classList.toggle("on");$(".bx",d).textContent=d.classList.contains("on")?"✓":""};$("#l").appendChild(d)})}
+go(0);
+</script>
+</body>
+</html>
